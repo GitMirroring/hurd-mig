@@ -48,6 +48,7 @@ ipc_type_t *itWaitTimeType;	/* used for dummy WaitTime args */
 ipc_type_t *itMsgOptionType;	/* used for dummy MsgOption args */
 ipc_type_t *itShortType;        /* used for the short type */
 ipc_type_t *itIntType;          /* used for the int type */
+ipc_type_t *itInt64Type;        /* used for the int64 type */
 ipc_type_t *itUintPtrType;      /* used for the uintptr_t type */
 ipc_type_t *itIntPtrType;       /* used for the intptr_t type */
 static bool types_initialized = false;
@@ -740,6 +741,11 @@ itStructDecl(u_int min_type_size_in_bytes, u_int required_alignment_in_bytes)
 	    assert(final_struct_bytes % 4 == 0);
 	    number_elements = final_struct_bytes / 4;
 	    break;
+	case 8:
+	    element_type = itInt64Type;
+	    assert(final_struct_bytes % 8 == 0);
+	    number_elements = final_struct_bytes / 8;
+	    break;
         case 1:
 	default:
 	    element_type = itByteType;
@@ -979,6 +985,8 @@ init_type(void)
     itInsert("short", itShortType);
     itIntType = itCIntTypeDecl("int", sizeof_int);
     itInsert("int", itIntType);
+    itInt64Type = itCIntTypeDecl("int64", sizeof_int64_t);
+    itInsert("int64", itInt64Type);
     itUintPtrType = itCIntTypeDecl("uintptr_t", sizeof_uintptr_t);
     itInsert("uintptr_t", itUintPtrType);
     itIntPtrType = itCIntTypeDecl("intptr_t", sizeof_intptr_t);
