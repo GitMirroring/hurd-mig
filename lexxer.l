@@ -107,7 +107,7 @@ static struct yysvf *oldYYBegin;
 #define RSTR_BEGIN yybgin = oldYYBegin;
 #endif
 
-static void doSharp(const char *body); /* process body of # directives */
+static void doSharp(char *body); /* process body of # directives */
 %}
 
 %Start	Normal String FileName QString SkipToEOL
@@ -271,7 +271,7 @@ LookFileName(void)
 }
 
 static void
-doSharp(const char *body)
+doSharp(char *body)
 {
     const char *startName;
 
